@@ -1,7 +1,7 @@
 package com.cecilia.List;
 
 public class ReverseList {
-    public ListNode reverseLinkedListIteratively(ListNode head) {
+    public static ListNode reverseLinkedListIteratively(ListNode head) {
         // Myth: Treat the to-ne-returned list as a new one
         if (head == null || head.next == null) {
             return head;
@@ -17,7 +17,7 @@ public class ReverseList {
         return newListHead;
     }
 
-    public ListNode reverseLinkedListRecursively(ListNode head) {
+    public static ListNode reverseLinkedListRecursively(ListNode head) {
         // Myth:
         // 1. Base case clarify:
         //   head == null is not the base case as it won't be used in the recursive rule, it's just a special case.
@@ -37,7 +37,7 @@ public class ReverseList {
         return newHead;
     }
 
-    public ListNode fancyReverse(ListNode head) {
+    public static ListNode fancyReverse(ListNode head) {
         // Input:  N1 -> N2 -> N3 -> N4 -> N5 -> N6
         // Output: N2 -> N1 -> N4 -> N3 -> N6 -> N5
         if (head == null || head.next == null) {
@@ -63,9 +63,7 @@ public class ReverseList {
         return head;
     }
 
-    class ListNode {
-        String name;
-        int value;
-        ListNode next;
+    public static ListNode fancyReverseIteratively(ListNode head) {
+        return null;
     }
 }
