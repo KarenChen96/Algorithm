@@ -1,6 +1,6 @@
 package com.cecilia.List;
 
-public class OperationsOnList {
+public class BasicOperations {
     /**
      * Find the middle node of a linked list
      * @param head
@@ -143,7 +143,7 @@ public class OperationsOnList {
      * @param head
      * @return
      */
-    public static ListNode convertList(ListNode head) {
+    public static ListNode reorderList(ListNode head) {
         if (head == null || head.next == null || head.next.next == null) {
             return head;
         }
@@ -152,5 +152,60 @@ public class OperationsOnList {
         secondHalfList = ReverseList.reverseLinkedListRecursively(secondHalfList);
         middleNode.next = null;
         return merge2SortedLists(head, secondHalfList);
+    }
+
+    /**
+     * Given a linked list and a target value x, partition it such that all nodes less than x are listed 
+     * before the nodes larger than or equal to target value. Keep the original relative order of nodes 
+     * in each of the two partitions.
+     */
+    public static ListNode partitionList(ListNode head, int target) {
+        // Note: Key point: how to avoid cycle when changing node's next pointer.
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode dummyHead = new ListNode();
+        ListNode pos = dummyHead;
+        ListNode tail = dummyHead;
+        ListNode curr = head;
+        while (curr != null) {
+            if(curr.value < target) {
+                ListNode temp = pos.next;
+                pos.next = curr;
+                curr = curr.next;
+                pos.next.next = temp;
+                pos = pos.next;
+            } else {
+                tail.next = curr;
+                curr = curr.next;
+                tail.next.next = null;
+                tail = tail.next;
+            }
+        }
+        return dummyHead.next;
+    }
+
+    public ListNode partitionList2(ListNode head, int target) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode dummyHeadSmall = new ListNode();
+        ListNode dummyHeadLarge = new ListNode();
+        ListNode smallTail = dummyHeadSmall;
+        ListNode largeTail = dummyHeadLarge;
+        ListNode curr = head;
+        while (curr != null) {
+            if(curr.value < target) {
+                smallTail.next = curr;
+                smallTail = smallTail.next;
+            } else {
+                largeTail.next = curr;
+                largeTail = largeTail.next;
+            }
+            curr = curr.next; // curr.next doesn't change in above process
+        }
+        largeTail.next = null; // Without this step might cause cycle.
+        smallTail.next = dummyHeadLarge.next;
+        return dummyHeadSmall.next;
     }
 }
