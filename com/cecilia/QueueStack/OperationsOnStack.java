@@ -41,9 +41,8 @@ public class OperationsOnStack {
                     count++;
                 }
                 buffer.addFirst(tmp);
-                while (count > 0) {
+                while (count-- > 0) {
                     buffer.addFirst(input.pollFirst());
-                    count--;
                 }
             }
         }
