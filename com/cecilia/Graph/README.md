@@ -20,6 +20,16 @@ Graph
 
 Search Algorithm commonly used in Graph
 1.Breadth-First Search (BFS-1)
+- BFS1 steps & How to describe a BFS's action?
+    1. Data sStructure: Maintain a FIFO queue, put all traversed but haven't been expanded nodes.
+    2. Expand a node, e.g. visit it/print its value
+    3. Generate the node's neighbor nodes
+    4. Termination Condition: do a loop until the queue is empty
+    5. Optionally de-duplicate visited nodes (typically for graph noe for tree)
+        - e.g. each node is expanded only once
+        - e.g. each node is generated only once
+    Notes: Queue size is only needed in some specific problems, e.g. printNodesByLevel
+- Classical Problems
     - Print a binary tree by level
     - Bipartite: whether a graph's node can be divided into two group, such that the nodes in each group do not have direct edges between the node that belong to the same group.
     - Determine whether a binary tree is a complete binary tree.
