@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,6 +63,67 @@ class DFS {
             findValidParentheseshelper(left, right - 1, index + 1, result, sb);
             sb.deleteCharAt(sb.length() - 1);
         }
+    }
 
+    public List<int[]> findCoinCombination(int n, int[] coins) {
+        // i-th level represents the number of i-th coin to be used, n levels
+        // remaining/coins[i] + 1 states
+
+        List<int[]> result = new LinkedList<>();
+        int[] counts = new int[coins.length];
+        // How to sort a int[] in reverse natural order?
+        // Sort coins in advance to have a smaller recursive tree
+        // Integer[] test = new Integer[coins.length];
+        // Arrays.sort(test, new Comparator<>() {
+        // @Override
+        // public int compare(Integer i1, Integer i2) {
+        // return 0;
+        // }
+        // }); // Collections.reverseOrder()
+        findCoinCombinationHelper(n, coins, 0, counts, result);
+        return result;
+    }
+
+    private void findCoinCombinationHelper(int remain, int[] coins, int index, int[] counts, List<int[]> result) {
+        if (remain <= 0 || index == counts.length) {
+            if (remain == 0) {
+                result.add(counts);
+            }
+            return;
+        }
+
+        for (int i = 0; i <= remain / coins[index]; i++) {
+            counts[index] = i;
+            findCoinCombinationHelper(remain - coins[index] * i, coins, index + 1, counts, result);
+        }
+    }
+
+    public List<String> findStringPermutation(String s) {
+        // i-th level represents what letter to be put in i-th position in the
+        // permutation, s.length levels.
+        // s.length - i states in i-th level nodes
+        // Time complexity: O(N * N!)
+        List<String> result = new LinkedList<>();
+        findStringPermutationHelper(s.toCharArray(), 0, result);
+        return result;
+    }
+
+    private void findStringPermutationHelper(char[] s, int index, List<String> result) {
+        if (index == s.length) {
+            result.add(s.toString());
+            return;
+        }
+
+        for (int i = index; i < s.length; i++) {
+            swap(s, i, index);
+            findStringPermutationHelper(s, index + 1, result);
+            swap(s, i, index);
+        }
+    }
+
+    private void swap(char[] s, int source, int target) {
+        char tmp = s[source];
+        s[source] = s[target];
+        s[target] = tmp;
     }
 }

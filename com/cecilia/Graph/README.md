@@ -104,14 +104,32 @@ General algorithm for BFS-1 & BFS-2
 Wikipedia: Backtracking is a general algorithm for finding solutions to some computational problems, notably constain satisfaction problems, that incrementally builds candidates to the solutions, and abandon a candidate ("backtracks) as soon as it determines that the candidate cannot possibly be completed to a valid solution.
 Example of using Backtracking: Eight queen puzzle.
 
-Basic Common Problems
+**Basic Common Problems**
 
 1. Print all subsets of a set
 2. Print all valid permutations of () () ()
 3. Print all combinations of coins that can sum up to a total value n
-4. Print all permutations of a string with no duplicate letters
+    - Compare two solutions
+    - Arrays.sort(T[] a, Comparator<? super T> c): Doesn't work on primitive type array
+    - Collections.reverseOrder()
+    - :question:Question: What happens when doing list.add(a), list: List<int[]>, a: int[]? Will a new array be created?
 
-Basic methodology:
+4. Print all permutations of a string with no duplicate letters
+    - **SWAP & SWAP** trick: Whenever every single permutation contains all the elements int he initial input, then should consider SWAP & SWAP.
+    - We can also use BFS-1 for permutation problems, but space complexity will be O(N!) because the recursion tree can grow exponentially.
+      - The essential reason: we build a **recursion tree**, any tree traversal algorithm can be used.
+      - This recursion tree is the abstract representation of the process of finding the permutation. Recursion is an algorithm structure. DFS/BFS are algorithm ideas.
+
+
+Problem            | Elements order matters | Number of states/branches
+-------------------| -----------------------|------
+string subset      | :x:                    | Constant
+()() permutation   | :x:                    | Constant but pruned
+coins              | :x:                    | Variable
+string permutation | :heavy_check_mark: => SWAP & SWAP   | 
+
+
+**Basic methodology** 
 
 1. How many levels in the recursion tree? What does it store in each level?
 2. How many different states should we try to put on each level?
