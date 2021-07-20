@@ -135,7 +135,7 @@ The common implementation of a heap is using a complete binary tree. A complete 
     - Alternative solution 1: Heapify via offer and percolateUp. Time complexity = O(NlogN)
     - Review: sum of geometric progression/sequence
 
-Notes of Implementation:
+**Notes of Implementation:**
 1. For a heap implemented by an array, maintaining a size is necessary. this.array.length doesn't change (if not expand capacity) during offer()/poll(), we will don't know the actual size of the heap without this.size field.
 2. percolateDown() and percolateUp() is iterative not a one-time swap&swap.
 3. In percolateDown(), note that the right child node doesn't necessarily exist.
@@ -146,7 +146,38 @@ Notes of Implementation:
 5. Runtime Exception VS. Error VS. Checked Exception (https://docs.oracle.com/javase/tutorial/essential/exceptions/catchOrDeclare.html)
 
 
+----
+
+### Sort Algorithm 
+Sort Algorithm | Time Complexity | Space Complexity | If Stable | Application
+--- | --- | --- | --- | ---
+Quick sort | Average: O(NlogN), Worst case: O(N^2) | Average: O(logN), Worst case: O(N) | Unstable sort | Arrays.sort(int[])
+Merge sort | Average/Worst case: O(NlogN) |  Average/Worst case: O(logN) | Stable sort | Arrays.sort(Integer[])
+Heap sort | O(NlogN) | O(1) | Unstable sort | ?
+
+Heapsort
+- How?
+    - Heapify an array into a max heap. [0, m] are unsorted elements, [m, n-1] are sorted ones. 
+    - Iterate 1. swap(0,k--) and 2. percolateDown(0) until k == 0;
+- Complexity
+    - time: heapify() - O(N) + percolateDown() - O(NlogN) (Similar to the calculation of time complexity of heapify()) = O(NlogN)
+    - space: O(1), in-place
+- Evaluation: not preferred
+    - Not stable + Typical runtime overhead :question:
+    - Poor locality (swap from first to last)
+    - Hard to parallelize/distribute :question:
+
+data access: 
+not by order, but discontinuous, not good for CPU cache
+too many swap: (quick sort 有序度，逆序度)
+
+
+
+Heap Practical Application: (TO-DO, jike course) 
+Priority Queue
+- Merge small files
+top-k,
+medium
+
 TO-DO 
 - unknown questions solution
-- practice class review 
-- leetcode schedule
