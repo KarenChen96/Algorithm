@@ -128,6 +128,7 @@ public class BasicOperations {
                 curr.next = l2;
                 l2 = l2.next;
             }
+            curr = curr.next;
         }
         if (l1 != null) {
             curr.next = l1;

@@ -1,8 +1,8 @@
 package com.cecilia.List;
 
 public class ListNode {
-    int value = 0;
-    ListNode next = null;
+    public int value = 0;
+    public ListNode next = null;
 
     public ListNode() {
 
