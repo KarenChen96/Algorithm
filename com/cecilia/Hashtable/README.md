@@ -46,7 +46,10 @@
         - Time: O(N), Space: O(1), but may overflow
     - Solution 4: Bit operation -> (XOR[1, n]) XOR (XOR[elements in the array])
         - Time: O(N), Space: O(1), won't overflow
-        - What's the theory?
+        - What's the theory? --> XOR result represents the existence of every bit difference. 
+            - In this case, the result is the difference of two XOR results, which is exactly the missing number.
+            - Deep dive: The negation of XOR(Exclusive or) is logical biconditional (logically equivalent to XNOR, Exclusive NOR, which means "both or neither").
+            - Logical equality (also known as biconditional) is an operation on two logical values, typically the values of two propositions, that produces a value of true if and only if both operands are false or both operands are true.
 
 3. Find the common numbers between two sorted arrays a[M], b[N]
      - Solution 1: HashSet
