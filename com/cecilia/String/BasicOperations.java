@@ -122,6 +122,8 @@ class BasicOperations {
      * 
      * Example: (text)s1 = "abcde", (patterns)s2 = "cde", return 2.
      * 
+     * // Solution 1: Brute-force, time complexity O(N^2)
+     * 
      * @param s1: text in which we want the find if the pattern exists
      * @param s2: pattern
      * @return The index that the pattern appears for the first time, -1 if not find.
@@ -134,7 +136,6 @@ class BasicOperations {
             return 0;
         }
 
-        // Solution 1: Brute-force, time complexity O(N^2)
         for (int i = 0; i < s1.length(); i++) {
             int j = 0;
             while (j < s2.length() && s2.charAt(j) == s1.charAt(j)) {
@@ -144,12 +145,93 @@ class BasicOperations {
                 return i;
             }
         }
-
-        // Solution 2: Rabin-Karp
-        // TO-DO
         return -1;
     }
+
+    /**
+     * Substring problem: how to determine whether a string is a substring of
+     * another string. 
+     * 
+     * Example: (text)s1 = "abcde", (patterns)s2 = "cde", return 2.
+     * 
+     * Solution 2: Rabin-Karp
+     * 
+     * Time complexity: O(N) for hashing pattern, O(N) for hashing text, O(M-N) for traversing text. 
+     * O(M) for comparing (Maybe more than once, but the probability of collision is O(1))
+     * Total: O(M+N)
+     * 
+     * @param s1: text in which we want the find if the pattern exists
+     * @param s2: pattern
+     * @return The index that the pattern appears for the first time, -1 if not find.
+     */
+    public static int strstrKC(String s1, String s2) {
+        if (s1 == null || s2 == null || s1.length() < s2.length()) {
+            return -1;
+        }
+        if (s2.length() == 0) {
+            return 0;
+        }
+        
+        char[] pattern = s2.toCharArray();
+        final int N = pattern.length;
+        long patternHash = hash(pattern, 0, N-1);
+        char[] text = s1.toCharArray();
+        long textHash = hash(text, 0, N-1);
+        if (patternHash == textHash && compare(pattern, text, 0)) {
+                return 0;
+        }
+        for (int j = N; j < text.length; j++) {
+            textHash = (textHash - (text[j-N] - 'a') * 26) * 26 + (text[j] - 'a');
+            if (patternHash == textHash && compare(pattern, text, j-N+1)) {
+                return j-N+1;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Convert a char array into a numeric hash value.
+     * 
+     * TO-DO: Need a better designed hashing function.
+     * @param array
+     * @param begin
+     * @param end
+     * @return
+     */
+    private static long hash(char[] array, int begin, int end) {
+        long result = 0;
+        for (int j = begin; j <= end; j++) {
+            result = result * 26 + (array[j] - 'a');
+        }
+        return result;
+    }
+
+    /**
+     * Compare the chars one by one. Comparing is necessary even if the hash values are the same, 
+     * because there is collision.
+     * 
+     * @param pattern
+     * @param text
+     * @param begin
+     * @return
+     */
+    private static boolean compare(char[] pattern, char[] text, int begin) {
+        for (int i = 0; i < pattern.length; i++) {
+            if (pattern[i] != text[begin+i]) {
+                return false;
+            }
+        }
+        return true;
+    }
     
+    /**
+     * Reverse a string.
+     * 
+     * Example: "I love yahoo" -> "yahoo love I" 
+     * 
+     * @param input: The string to be reversed.
+     * @return
+     */
     public static String reverseString(String input) {
         char[] str = input.toCharArray();
         reverse(str, 0, str.length-1);
@@ -176,4 +258,5 @@ class BasicOperations {
         array[i] = array[j];
         array[j] = tmp;
     }
+
 }
