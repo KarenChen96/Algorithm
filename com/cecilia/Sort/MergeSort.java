@@ -108,8 +108,9 @@ public class MergeSort {
             return s;
         }
         char[] helper = new char[s.length()];
-        sort(s.toCharArray(), helper, 0, s.length()-1);
-        return s;
+        char[] array = s.toCharArray();
+        sort(array, helper, 0, s.length()-1);
+        return new String(array);
     }
 
     private static void sort(char[] str, char[] helper, int begin, int end) {
@@ -122,8 +123,69 @@ public class MergeSort {
         merge(str, helper, begin, end);
     }
 
+    // A1B2C3D4E5 --> ABCDE12345
+    // Similar to int[] merge, but with different sort rule.
     private static void merge(char[] str, char[] helper, int begin, int end) {
-        // Similar to int[] merge, but with different sort rule.
+        int mid = begin + (end-begin)/2;
+        // ABC12 DE345
+        int p1 = begin;
+        int p2 = mid+1;
+        for (int i = begin; i <= end; i++) {
+            if (p2 > end || (p1 <= mid && str[p1] > str[p2])) {
+                helper[i] = str[p1++];
+            } else {
+                helper[i] = str[p2++];
+            }
+        }
+        copy(array, helper, begin, end);
     }
     
+    /**
+     * Given a string "ABCD1234", convert it to another string "A1B2C3D4".
+     * 
+     * Steps: A1B2C3D4 <-- AB12CD34 <-- ABCD1234
+     * 
+     * Reverse Engineering
+     * 
+     * @param s
+     */
+    public static String convertII(String s) {
+        if (s == null || s.length() <= 1) {
+            return s;
+        }
+        char[] helper = new char[s.length()];
+        char[] array = s.toCharArray();
+        sortII(array, helper, 0, s.length()-1);
+        return new String(array);
+    }
+
+    // Idea & Code is simple, but the logic of swapping values correctly is delicate.
+    private static void sortII(char[] array, char[] helper, int begin, int end) {
+        // Base case: if there are two elements (or less) to be reordered
+        if (begin >= end-1) {
+            return;
+        }
+        int mid = begin + (end-begin)/2; // mid is contained in the left part
+        int leftMid = begin + (mid-begin)/2;
+        int leftLength = leftMid - begin + 1;
+        int rightMid = mid+1 + (end-(mid+1))/2;
+        int rightLength = end - rightMid;
+        swap(array, helper, leftMid, leftLength, rightMid, rightLength);
+    }
+
+    private static void swap(char[] array, char[] helper, int leftMid, int leftLength, int rightMid, int rightLength) {
+        for (int i = 0; i < leftLength; i++) {
+            helper[leftMid+1+i] = array[mid+1+i];
+        }
+        for (int i = 0; i < rightLength; i++) {
+            helper[rightMid-i] = array[mid-i];
+        }
+        copy(array, helper, leftMId+1, rightMid);
+    }
+
+    private static void copy(char[] array, char[] helper, int from, int to) {
+        for (int i = from; i <= to; i++) {
+            array[i] = helper[i];
+        }
+    }
 }

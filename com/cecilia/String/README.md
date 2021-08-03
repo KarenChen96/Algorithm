@@ -20,7 +20,12 @@ Common Problems (Similar to Array problems, usually need two pointers to solve)
 
 
 Advanced Problems
-1. Shuffling: Move letters around E.g. ABCD1234 -> A1B2C3D4
+1. Shuffling: Move letters around (See Merge Sort Implementation class)
+    1.1 ABCD1234 -> A1B2C3D4
+    1.2 A1B2C3D4E5 -> ABCDE12345
+        - Idea & Code is simple, but the logic of swapping values correctly is delicate.
+        - The workflow is clear once really figured out the rule of partition. (我们始终遵循同一套计算mid的逻辑，因此可以ensure左右部分需要的元素数量。)
+
 2. Permutation (use DFS)
 3. Decoding/Encoding aaaabcc -> a4b1c2
 4. Sliding windows using slow/fast pointers

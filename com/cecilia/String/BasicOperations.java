@@ -259,4 +259,47 @@ class BasicOperations {
         array[j] = tmp;
     }
 
+    
+    /**
+     * Replace specific substring with another string.
+     * 
+     * Example: "student" ---> "stuXXt" (den --> XX)
+     * 
+     * @param input
+     * @param s1: The string to be replaced.
+     * @param s2: The string that will replace s1.
+     * @return
+     */
+    public static String replaceChar(String input, String s1, String s2) {
+        int index = strstrKC(input, s1);
+        int delta = s1.length() - s2.length();
+        char[] array = input.toCharArray();
+        for (int i = index; i+delta < array.length; i++) {
+            if (i-index < s2.length()) {
+                array[i] = s2.charAt(i-index);
+            } else {
+                array[i] = array[i+delta];
+            }
+        }
+        // Assumption: 1. only one match; 2. s2.len < 1.len
+        return new String(array, 0, array.length-delta);
+    }
+
+    // What is s2.len > s1.len?
+
+    // What if there are more than one match? How to update strstr method? --> Seems to be covered later...
+
+    /**
+     * String Shuffling - More general case: 
+     *  - [C_1, C_2, C_3, ..., C_2k] --> [C_1, C_k+1, C_2, C_k+2, C_3, C_k+3, ..., C_k, C_2k]
+     *  - [C_1, C_2, C_3, ..., C_2k, C-2k+1] --> [C_1, C_k+1, C_2, C_k+2, ..., C_k, C_2k, C_2k+1]
+     * 
+     * Similar to convert II
+     * 
+     * @param s
+     * @return
+     */
+    public static String reOrderString(String s) {
+        return s;
+    }
 }
