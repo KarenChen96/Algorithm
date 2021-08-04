@@ -137,7 +137,7 @@ public class MergeSort {
                 helper[i] = str[p2++];
             }
         }
-        copy(array, helper, begin, end);
+        copy(str, helper, begin, end);
     }
     
     /**
@@ -170,17 +170,19 @@ public class MergeSort {
         int leftLength = leftMid - begin + 1;
         int rightMid = mid+1 + (end-(mid+1))/2;
         int rightLength = end - rightMid;
-        swap(array, helper, leftMid, leftLength, rightMid, rightLength);
+        swap(array, helper, leftMid, leftLength, rightMid, rightLength, mid);
+        sortII(array, helper, begin, leftMid + leftLength);
+        sortII(array, helper, leftMid + leftLength, end);
     }
 
-    private static void swap(char[] array, char[] helper, int leftMid, int leftLength, int rightMid, int rightLength) {
+    private static void swap(char[] array, char[] helper, int leftMid, int leftLength, int rightMid, int rightLength, int mid) {
         for (int i = 0; i < leftLength; i++) {
             helper[leftMid+1+i] = array[mid+1+i];
         }
         for (int i = 0; i < rightLength; i++) {
             helper[rightMid-i] = array[mid-i];
         }
-        copy(array, helper, leftMId+1, rightMid);
+        copy(array, helper, leftMid+1, rightMid);
     }
 
     private static void copy(char[] array, char[] helper, int from, int to) {
