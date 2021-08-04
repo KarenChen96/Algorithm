@@ -15,8 +15,8 @@ class AdvancedOperations {
         if (input == null || input.length() <= 0) {
             return result;
         }
-
         findPermutations(input.toCharArray(), result, 0);
+        return result;
     }
 
     private static void findPermutations(char[] array, List<String> result, int index) {
@@ -33,6 +33,12 @@ class AdvancedOperations {
                 swap(array, index, i);
             }
         }
+    }
+
+    private static void swap(char[] array, int i, int j) {
+        char tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
     }
 
     /**
@@ -55,7 +61,7 @@ class AdvancedOperations {
             } else {
                 // result[slow++] = count;
                 // Convert from int to char!!!
-                result[slow++] = (har) ('0' + count); 
+                result[slow++] = (char) ('0' + count); 
                 result[slow++] = input.charAt(fast);
                 count = 1;
             }
