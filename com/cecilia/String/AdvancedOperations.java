@@ -1,6 +1,5 @@
 package com.cecilia.String;
 
-import java.util.LinkedList;
 import java.util.*;
 
 
@@ -82,5 +81,119 @@ class AdvancedOperations {
             }
         }
         return deltaLength;
+    }
+
+    // TO-DO: Check encoding given solution, then practice Char removal
+
+
+    /**
+     * Given a string, returns the length of the longest substring without duplicate characters.
+     * For example, the longest substrings without repeating characters for "BDEFGADE" are "BDEFGA", whose size is 6.
+     * 
+     * @param input 
+     * @return
+     */
+    public static int longestSubstring(String input) {
+        /** 
+         * Variable size sliding window
+         * Two pointers: slow is the left border of current sliding window, fast is the right border.
+         * If array[fast] exists in current substring, 
+         *      1. Check current substring length to temporary max length. 
+         *      2. slow++ till array[fast] is excluded, remove array[slow] from the set simultaneously.
+         * Else simply fast++; 
+        */
+        if (input == null || input.length() == 0) {
+            return 0;
+        }
+        int slow = 0;
+        int fast = 1;
+        int currMax = 1; // temporary max length of satisfying substring
+        char[] array = input.toCharArray();  
+        Set<Character> set = new HashSet<>();
+        set.add(array[0]);
+        while ( fast < array.length) {
+            if (!set.add(array[fast])) {
+                currMax = Math.max(currMax, fast-slow);
+                while (slow < fast) {
+                    set.remove(array[slow++]);
+                }
+            }
+            fast++;
+        }
+        return currMax;
+    }
+
+    /**
+     * Find all anagrams of a substring s2 in a long string s1.
+     * E.g., s2 = "aaba" (<a,2><b,1><c,1>), s1 = "zzzzcdebcaabcyywwww"
+     * return {"bcaa", "caab", "aabc"}
+     * 
+     * @param s1
+     * @param s2: substring
+     * @return
+     */
+    public static List<String> findAnagrams(String s1, String s2) {
+        List<String> result = new LinkedList<>();
+        if (s1 == null || s2 == null || s1.length() == 0 || s2.length() == 0 || s1.length() < s2.length()) {
+            return result;
+        }
+
+        /**
+         * Fixed-size sliding window
+         * */
+        
+        // Construct a map for substring
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c : s2.toCharArray()) {
+            Integer count = map.get(c);
+            if (count == null) {
+                count = 0;
+            }
+            map.put(c, ++count);
+        }
+        int counter = 0;
+        int slow = 0;
+        int fast = 0;
+        while (fast < s2.length()-1) {
+            if (map.containsKey(s1.charAt(fast))) {
+                int number = map.get(s1.charAt(fast));
+                if (number == 0) {
+                    counter--;
+                } else if (number == 1) {
+                    counter++;
+                }
+                map.put(s1.charAt(fast), number-1);
+            }
+            fast++;
+        }
+        while (slow <= s1.length()-s2.length()) {
+            if (counter == map.size()) {
+                result.add(s1.substring(slow, fast+1));
+            }
+            
+            // Move the sliding window one step forward
+            if (map.containsKey(s1.charAt(slow))) {
+                int number = map.get(s1.charAt(slow));
+                if (number == 0) {
+                    counter--;
+                } else if (number == -1) {
+                    counter++;
+                }
+                map.put(s1.charAt(slow), number+1);
+            }
+            slow++;
+            
+            if (map.containsKey(s1.charAt(fast))) {
+                int number = map.get(s1.charAt(fast));
+                if (number == 0) {
+                    counter--;
+                } else if (number == 1) {
+                    counter++;
+                }
+                map.put(s1.charAt(fast), number-1);
+            }
+            fast++;
+        }
+        return result;
     }
 }
