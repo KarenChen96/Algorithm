@@ -56,7 +56,6 @@ TO-DO:
     - string-matching problem: consider if there are more than one matches
 
 08/04 practice leftover
-1. String encoding: how to do in-place implementation? --> Check the given solution.
-2. Char removal: Handle the result string becomes longer case 
 3. General String shuffling in BasicOperations.java
 4. Check the given solution of ABCD1234 --> A1B2C3D4, my implementation seems not the same as the idea given in the theory class.
+5. Check given solutions of findAnagrams and longestAllOnes

@@ -1,5 +1,7 @@
 package com.cecilia.String;
 
+import java.util.List;
+
 class BasicOperations {
     /**
      * (Char removal) Remove one/some particular chars from a string IN PLACE.
@@ -266,12 +268,14 @@ class BasicOperations {
      * 
      * Example: "student" ---> "stuXXt" (den --> XX)
      * 
+     * Assumption: 1. only one match; 2. s2.len < s1.len
+     * 
      * @param input
      * @param s1: The string to be replaced.
      * @param s2: The string that will replace s1.
      * @return
      */
-    public static String replaceChar(String input, String s1, String s2) {
+    public static String replaceCharShorter(String input, String s1, String s2) {
         int index = strstrKC(input, s1);
         int delta = s1.length() - s2.length();
         char[] array = input.toCharArray();
@@ -282,13 +286,58 @@ class BasicOperations {
                 array[i] = array[i+delta];
             }
         }
-        // Assumption: 1. only one match; 2. s2.len < 1.len
         return new String(array, 0, array.length-delta);
     }
 
-    // What is s2.len > s1.len?
+    // What if s2.len > s1.len, and there might be more than one match?
+    public static String replaceCharLonger(String input, String s1, String s2) {
+        char[] array = input.toCharArray();
+        List<Integer> indices = strstr(array, s1);
+        int newLength = array.length + indices.size() * (s2.length() - s1.length());
+        char[] result = new char[newLength];
+        int fast = array.length - 1;
+        int slow = result.length - 1;
+        // int count = indices.size() - 1;
+        // int patternIndex = indices.get(count);
+        int lastIndex = indices.size() - 1;
+        while (fast >= 0) {
+            // if (fast == patternIndex + s1.length()) {
+            //     // array[fast] is the end of the pattern s1, then replace s1 to s2
+            //     for (int i = s2.length()-1; i>= 0; i--) {
+            //         result[slow--] = s2.charAt(i);
+            //     }
+            //     fast -= s1.length();
+            //     patternIndex = indices.get(count--); // what if count < 0?
+            // }
+            // Above logic doesn't consider the case that lastIndex < 0
+            if (lastIndex >= 0 && fast == indices.get(lastIndex) + s1.length()) {
+                // array[fast] is the end of the pattern s1, then replace s1 to s2
+                for (int i = s2.length()-1; i>= 0; i--) {
+                    result[slow--] = s2.charAt(i);
+                }
+                fast -= s1.length();
+                lastIndex--;
+            }  
+            else {
+                result[slow--] = array[fast--];
+            }
+        }
+        return result.toString();
+    }
 
-    // What if there are more than one match? How to update strstr method? --> Seems to be covered later...
+    // TO-DO: How to find all matches?
+    private static List<Integer> strstr(char[] input, String pattern) {
+        return null;
+    }
+
+    // A more general solution: 
+    // - We don't know the size relationship between s1 and s2.
+    // - There might be more than one match
+    // (- Matches overlap?)
+    public static String generalReplaceChar(String input, String s1, String s2) {
+        return null;
+    }
+    
 
     /**
      * String Shuffling - More general case: 
