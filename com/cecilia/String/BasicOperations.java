@@ -335,9 +335,9 @@ class BasicOperations {
     // - There might be more than one match
     // (- Matches overlap?)
     public static String generalReplaceChar(String input, String s1, String s2) {
+        // Simply compare s1 and s2 length, and call replaceShorter and replaceLonger respectively.s
         return null;
     }
-    
 
     /**
      * String Shuffling - More general case: 

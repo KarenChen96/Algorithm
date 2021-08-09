@@ -216,12 +216,7 @@ class AdvancedOperations {
         if (s1 == null || s2 == null || s1.length() == 0 || s2.length() == 0 || s1.length() < s2.length()) {
             return result;
         }
-
-        /**
-         * Fixed-size sliding window
-         * */
-        
-        // Construct a map for substring
+        // Fixed-size sliding window
         Map<Character, Integer> map = new HashMap<>();
         for (char c : s2.toCharArray()) {
             Integer count = map.get(c);
@@ -231,7 +226,34 @@ class AdvancedOperations {
             map.put(c, ++count);
         }
 
-        // Try to make the code more concise
+        // Given solution
+        int match = 0;
+        for (int i = 0; i < s1.length(); i++) {
+            char tmp = s1.charAt(i);
+            Integer count = map.get(tmp);
+            if (count != null) {
+                map.put(tmp, count-1);
+                if(count == 1) {
+                    match++;
+                } // why don't consider match-- case here?
+            }
+            if (i >= s2.length()) {
+                // Exclude the leftmost character
+                char tmp = s1.charAt(i-s2.length());
+                Integer count = map.get(tmp);
+                if (count != null) {
+                    map.put(tmp, count+1);
+                    if(count == 0) {
+                        match--;
+                    }
+                }
+            }
+            if (match == map.size()) {
+                result.add(s1.substring(i-s2.length(), i+1));
+            }
+        }
+
+        /* // My implementation
         int counter = 0;
         int slow = -1;
         int fast = -1;
@@ -262,7 +284,7 @@ class AdvancedOperations {
                 }
                 map.put(s1.charAt(fast), number-1);
             }
-         }
+        }*/
         return result;
     }
 
@@ -271,7 +293,7 @@ class AdvancedOperations {
      * sub-array that consists of all 1's.
      * 
      * Example: input = "011111011011011011111110", k = 4 
-     *          return ""
+     *          return "..."
      */
     public static int[] longestAllOnes(String input, int k) {
         /**
@@ -294,7 +316,7 @@ class AdvancedOperations {
                     // move slow till a 0 is exclueded from the window.
                     for (;slow+1 <= fast; slow++) {
                         if (input.charAt(slow+1) == 0) {
-                            slow += 1; // slow points to a O now.
+                            slow += 1; // slow points to a 0 now.
                             break;
                         }
                     }
@@ -308,5 +330,27 @@ class AdvancedOperations {
         }
         // Post-process is not needed here, because currMax is always updated when possible necessary.
         return resultIndices;
+    }
+
+    /**
+     * Given solution: longestConsecutiveOnes
+     *
+     * Return the length of the longest satisfying substirng
+     */
+    public static int longestConsecutiveOnes(int[] array, int k) {
+        int slow = 0;
+        int fast = 0;
+        int longest = 0;
+        while (fast < array.length) {
+            if (array[fast] == 1) {
+                longest = Math.max(longest, ++fast-slow);
+            } else if (count < k) {
+                count++;
+                longest = Math.max(longest, ++fast-slow);
+            } else if(array[slow++] == 0) {
+                count--;
+            }
+        }
+        return 0;
     }
 }

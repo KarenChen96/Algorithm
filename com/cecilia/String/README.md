@@ -42,7 +42,12 @@ Extension: How are characters are represented?
 4. Sliding windows using slow/fast pointers
     4.1 Longest substring that contains only unique chars
     4.2 Find all anagrams of a substring s2 in a long string s1
+        - A little trick here: 
+            - when move the right border, only need to consider match++ case;
+            - when move the left border, only need to consdier match-- case;
+        - Underneath logic: ??? :question:
     4.3 Given a 0-1 array, you can flip at most k 0's to 1's. Please find the longest sub-array that consists of all 1's.
+        - The given solution is really concise, review! 
 
 5. Matching (*, ?)
 
@@ -58,4 +63,6 @@ TO-DO:
 08/04 practice leftover
 3. General String shuffling in BasicOperations.java
 4. Check the given solution of ABCD1234 --> A1B2C3D4, my implementation seems not the same as the idea given in the theory class.
-5. Check given solutions of findAnagrams and longestAllOnes
+5. Implement: find all substring matches if matches are more than one(in BasicOperations)
+6. Think: why the given solution of findAnagrams is implemented in that way?
+7. Review the given solution of longestConsecutiveOnes
