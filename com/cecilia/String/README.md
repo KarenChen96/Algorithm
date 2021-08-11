@@ -28,26 +28,33 @@ Extension: How are characters are represented?
 
 ### Advanced Problems
 1. Shuffling: Move letters around (See Merge Sort Implementation class)
+    
     1.1 ABCD1234 -> A1B2C3D4
+    
     1.2 A1B2C3D4E5 -> ABCDE12345
-        - Idea & Code is simple, but the logic of swapping values correctly is delicate.
-        - The workflow is clear once really figured out the rule of partition. (我们始终遵循同一套计算mid的逻辑，因此可以确保左右部分需要的元素数量。)
+        
+    - Idea & Code is simple, but the logic of swapping values correctly is delicate.
+    - The workflow is clear once really figured out the rule of partition. (我们始终遵循同一套计算mid的逻辑，因此可以确保左右部分需要的元素数量。)
 
 2. Permutation (use DFS)
 
 3. Decoding/Encoding aaaabcc -> a4b1c2
-    Notes:
-    - Convert a int count to a char, do it correctly! --> (char) ('0' + count); 
+    - Notes:
+        - Convert a int count to a char, do it correctly! --> (char) ('0' + count); 
 
 4. Sliding windows using slow/fast pointers
+
     4.1 Longest substring that contains only unique chars
+    
     4.2 Find all anagrams of a substring s2 in a long string s1
-        - A little trick here: 
-            - when move the right border, only need to consider match++ case;
-            - when move the left border, only need to consdier match-- case;
-        - Underneath logic: ??? :question:
+        
+    - A little trick here: 
+        - when move the right border, only need to consider match++ case;
+        - when move the left border, only need to consider match-- case;
+    - Underneath logic: ??? :question:
+    
     4.3 Given a 0-1 array, you can flip at most k 0's to 1's. Please find the longest sub-array that consists of all 1's.
-        - The given solution is really really elegant and concise! :heart_eyes:
+    - The given solution is really really elegant and concise! :heart_eyes:
 
 5. Matching (*, ?)
 
@@ -55,9 +62,7 @@ Extension: How are characters are represented?
 
 
 TO-DO: 
-1. String practice class review, common classes and their APIs
-
-08/04 practice leftover
+1. String practice class review Part II
 3. General String shuffling in BasicOperations.java
 4. Check the given solution of ABCD1234 --> A1B2C3D4, my implementation seems not the same as the idea given in the theory class.
 5. String I
@@ -66,6 +71,8 @@ TO-DO:
 6. Think: why the given solution of findAnagrams is implemented in that way?
 
 
+<br />
+----
 
 # Strings in Java
 ## Basic Concept
