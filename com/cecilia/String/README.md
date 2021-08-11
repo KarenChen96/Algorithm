@@ -47,7 +47,7 @@ Extension: How are characters are represented?
             - when move the left border, only need to consdier match-- case;
         - Underneath logic: ??? :question:
     4.3 Given a 0-1 array, you can flip at most k 0's to 1's. Please find the longest sub-array that consists of all 1's.
-        - The given solution is really concise, review! 
+        - The given solution is really really elegant and concise! :heart_eyes:
 
 5. Matching (*, ?)
 
@@ -56,13 +56,102 @@ Extension: How are characters are represented?
 
 TO-DO: 
 1. String practice class review, common classes and their APIs
-2. String II problems
-3. String I
-    - string-matching problem: consider if there are more than one matches
 
 08/04 practice leftover
 3. General String shuffling in BasicOperations.java
 4. Check the given solution of ABCD1234 --> A1B2C3D4, my implementation seems not the same as the idea given in the theory class.
-5. Implement: find all substring matches if matches are more than one(in BasicOperations)
+5. String I
+    - string-matching problem: consider if there are more than one matches
+    Implement: find all substring matches if matches are more than one(in BasicOperations)
 6. Think: why the given solution of findAnagrams is implemented in that way?
-7. Review the given solution of longestConsecutiveOnes
+
+
+
+# Strings in Java
+## Basic Concept
+- A string is a sequence of characters.
+- In java,they are objects (String.java). Key points: 
+    1. char array can be reused; 
+    2. char array is declared as final.
+
+            class String {
+                private final char[] value;
+                // Different String objects can reuse the same char array,
+                // but can start with different offset index.
+                private int offset;
+                private int count;
+                public String() {
+                    value = new char[0];
+                    offset = 0;
+                    count = 0;
+                }
+            }
+
+## Creating Strings
+How many different ways can we create a String? Will a new String object be generated every time we create a string?
+
+### String literal
+- A series of characters, e.g., String s1 = "abdsafd";
+- Pooling for String objects
+    - There is no need to maintain several copies of String objects with the same literal, because String objects are **immutable**.
+    - Usually compiler and JVM wil optimize for the number of String objects created, it will maintain an **intern area** in **HEAP**, for the same String literal it will only has one String object associated.
+    - The String objects created with "new" will not use the intern pool.
+
+### Concatenate
+- There are 2 concatenation case: compile time concat, and runtime concat.
+    
+    The optimization is at compile time, the literals will be concatenated if possible before getting the String object.
+    
+        String sa = "a"; 
+        String sb = "b";
+        String sab = "a" + "b"; // Compile time concat, equals to: String sab = "ab";
+        String sab2 = sa.concat(sb); // Runtime concat
+        String sab3 = sa + "b"; // Runtime concat, <=> sa.concat(sb)
+        String sab4 = sa + sb; // Runtime concat
+
+        System.out.println(sab == "a" + "b"); // T
+        System.out.println(sab == sa + "b"); // F
+        System.out.println(sab == sa + sb);// F
+
+- Concat complexity
+
+        // type conversion & String operation complexity
+        String s1 = 1 + "def"; // String.valueOf(1), (1 -> Integer(1) -> Integer(1).toString()) --> "1"
+        String s2 = "id: " + 2 + "isStudent: " + true + 'y'; // Can be optimized
+
+    1. Type conversion
+        - See section _Convert Number to/from Strings_
+    2. String operation complexity & Optimization
+        - Time: O(N^2* M), N strings, average length is M
+        - Optimization (at compile time?) (See section _StringBuilder_)
+            - new StringBuilder().append("id: ").append(2).append("isStudent: ").append(true).append('y).toString(); 
+            - Time: O(n * m), Space: O(n * m)
+
+----
+All ways listed below will create String objects with "new", hence intern area will not be involved.
+### Constructors
+- String()
+- String(String value)
+- String(char[] array)
+- String(char[] array, int offset, int length)
+- String(StringBuilder builder)
+
+### Convert from other types to String
+- charArray.toString()
+- stringBuilder.toString()
+- ...
+
+<br />
+----
+
+## String Conversion
+
+### Convert Number to/from Strings
+### Chars and substrings
+
+### String Comparison
+
+<br />
+----
+
+## String Operations & StringBuilder/StringBuffer

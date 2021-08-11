@@ -341,6 +341,7 @@ class AdvancedOperations {
         int slow = 0;
         int fast = 0;
         int longest = 0;
+        int count = 0;
         while (fast < array.length) {
             if (array[fast] == 1) {
                 longest = Math.max(longest, ++fast-slow);
@@ -351,6 +352,6 @@ class AdvancedOperations {
                 count--;
             }
         }
-        return 0;
+        return longest;
     }
 }
