@@ -149,16 +149,61 @@ All ways listed below will create String objects with "new", hence intern area w
 - ...
 
 <br />
-----
 
 ## String Conversion
 
 ### Convert Number to/from Strings
+|Type| To String | From String|
+---|---|--- 
+Number - Primitive | int i = 0;<br> String si = i + ""; <br>String si = String.valueOf(i);<br> String si = Integer.toString(i);| Integer.parseInt(si); //return int
+Number - wrapper class | Integer integer = null;<br> String si = String.valueOf(integer);<br> String si = integer.toString(); | Integer.valueOf(si); // return Integer
+
+
+Same for other primitive types: Byte, Short, Long, Float, Double, Boolean
 ### Chars and substrings
+- String substring(int beginIndex, int endIndex): endIndex in exclusive
+- String substring(int beginIndex) 
+    - Before Java 7u6, a substring will reuse the char array maintained by the original string, and maintain the offset and the length. **Time complexity = O(1), old string cannot be garbage-collected.**
+    - After Java 7u6, a substring will make a copy of the part of the original string's char array. **Time complexity = O(N), old string can be gc-ed.**
+- char charAt(int index)
 
 ### String Comparison
+- equals: String class overrides (abstarct class) Object equals() (and overrides hashCode() for comparing). s1.equals(s2) will compare characters in two strings.
+
+- ==: Compares the address of two string objects.
 
 <br />
 ----
 
 ## String Operations & StringBuilder/StringBuffer
+Common String APIs:
+- boolean endsWith(String suffix)
+- boolean startsWith(String prefix)
+- int comprareTo(String anotherString)
+    - Compares two strings lexicographically. The comparison is based on the Unicode value of each character in the strings.
+    - Returns 0 exactly when the equals(Object obj) method would return true.
+    - Return value of compareTo():
+        - If they differ at some index positions, let k be the smallest such index. Returns this.charAt(k) - anotherStr.charAt(k).
+        - Otherwise, returns this.length() - anotherStr.length().
+- int comprareToIgnoreCase(String anotherString)
+- int equals(Object object)
+- int equalsIgnoreCase(Object object)
+- String[] split(String regex)
+- String[] split(String regex, int limit)
+- String trim()
+- ... 
+
+For any method provided by String class, it is not modifying the String object's value, it always returns a new String object if needed. We need some kinds of intermediate class that is modifiable since String is immutable. --> StringBuilder/StringBuffer
+
+### StringBuilder/StringBuffer
+- StringBuilder: "String" that can be modified, varaible-length arrays that contain a sequence of characters.
+- Common APIs
+    - append()
+    - insert()
+    - delete()
+    - deleteCharAt()
+    - reverser()
+    - replace(int start, int end, String str)
+    - setLength()
+- Difference between StringBuilder & StringBuffer: StringBuffer is thread-safe, each of he methods are synchronized. StringBuilder is not thread-safe, is is intended to be used in single thread environment.
+- Internally, StringBuilder is very similar to ArrayList ("re-sizable" array)
